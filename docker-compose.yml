@@ -1,0 +1,31 @@
+version: '3'
+
+networks:
+  icommerce-inventory:
+
+services:
+  postgres-inventory:
+    image: postgres:11-alpine
+    ports:
+      - ${POSTGRES_PORT}:5432
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    networks:
+      - icommerce-inventory
+  postgres-tracking:
+    image: postgres:11-alpine
+    ports:
+      - ${TRACKING_POSTGRES_PORT}:5432
+    environment:
+      POSTGRES_USER: ${TRACKING_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${TRACKING_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${TRACKING_POSTGRES_DB}
+    networks:
+      - icommerce-inventory
+  redis-tracking:
+    image: redis:latest
+    ports:
+      - ${TRACKING_REDIS_PORT}:6379
+    restart: always
