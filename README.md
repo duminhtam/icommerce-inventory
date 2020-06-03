@@ -78,6 +78,14 @@ Run end to end test, you should stop the development server first
 yarn test:e2e
 ```
 
+### Test coverage
+
+Get the coverage report
+
+```
+yarn test:cov
+```
+
 ### And coding style tests
 
 We using eslint standard
