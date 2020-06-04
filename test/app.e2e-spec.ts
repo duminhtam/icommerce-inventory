@@ -152,13 +152,13 @@ describe('Inventory Service (e2e)', () => {
 
 
   describe('Add Facet to Product', () => {
-    it('Should return status 201 after create a facet to Product successfully (add Apple to iPhone X)', async () => {
+    it('Should return status 201 after create a facet to Product successfully (add brand Apple to iPhone X)', async () => {
       await request(app.getHttpServer())
         .post('/product/1/facet/1')
         .expect(201)
     });
 
-    it('Should return status 201 after create a facet to Product successfully (add Apple to iPhone X)', async () => {
+    it('Should return status 201 after create a facet to Product successfully (add brand Samsung to Galaxy S10)', async () => {
       await request(app.getHttpServer())
         .post('/product/2/facet/2')
         .expect(201)
