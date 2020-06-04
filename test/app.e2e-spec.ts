@@ -39,8 +39,8 @@ describe('Inventory Service (e2e)', () => {
     await app.close();
   });
 
-  describe('Product', () => {
-    it('Should return status 201 after create a product success', async () => {
+  describe('Create Product', () => {
+    it('Should return status 201 after create a product successfully (iPhone X)', async () => {
       const payload = {
         "name": "iPhone X",
         "description": "The iPhone X is a smartphone designed, developed, and marketed by Apple Inc. It is the eleventh generation of the iPhone and was announced on September"
@@ -58,117 +58,121 @@ describe('Inventory Service (e2e)', () => {
         "enabled": true,
         "variants": [],
         "facets": [],
-        // userId: expect.any(Number),
-        // accessToken: expect.any(String),
       });
     });
 
-    describe('Variant', () => {
-      it('Should return status 201 after create a variant success', async () => {
-        const payload = {
-          "sku": "IPXE64GS",
-          "name": "iPhone X 64gb",
-          "price": 1000,
-          "currencyCode": 1,
-          "description": "The iPhone X is a smartphone designed, developed, and marketed by Apple Inc. It is the eleventh generation of the iPhone and was announced on September",
-          "productId": 1
-        };
-        const data = await request(app.getHttpServer())
-          .post('/product')
-          .send(payload)
-          .expect(201)
+    it('Should return status 201 after create a product successfully (Samsung S10)', async () => {
+      const payload = {
+        "name": "Samsung S10",
+        "description": "Samsung Galaxy S10 is a line of Android-based smartphones manufactured, released and marketed by Samsung Electronics as part of the Samsung Galaxy"
+      };
+      const data = await request(app.getHttpServer())
+        .post('/product')
+        .send(payload)
+        .expect(201)
 
-        expect(data.body.name).toEqual('iPhone X 64gb');
+      expect(data.body).toEqual({
+        "id": 2,
+        "name": "Samsung S10",
+        "slug": "samsung-s10",
+        "description": "Samsung Galaxy S10 is a line of Android-based smartphones manufactured, released and marketed by Samsung Electronics as part of the Samsung Galaxy",
+        "enabled": true,
+        "variants": [],
+        "facets": [],
       });
     });
-    //
-    // it('Should return status 201 after login success', async () => {
-    //   const payload = {
-    //     "username": "admin",
-    //     "password": "a@123456!!!"
-    //   };
-    //   const data = await request(app.getHttpServer())
-    //     .post('/auth/login')
-    //     .send(payload)
-    //     .expect(201)
-    //
-    //   expect(data.body).toEqual({
-    //     userId: expect.any(Number),
-    //     accessToken: expect.any(String),
-    //   });
-    // });
-    //
-    // it('Should return status 401 after login failed', async () => {
-    //   const payload = {
-    //     "username": "adminx",
-    //     "password": "a@123456!!!xxx"
-    //   };
-    //   const data = await request(app.getHttpServer())
-    //     .post('/auth/login')
-    //     .send(payload)
-    //     .expect(401)
-    //
-    //   expect(data.body).toEqual({
-    //
-    //     status: 401,
-    //     error: "Unauthorized",
-    //     timestamp: expect.any(String),
-    //     path: "/auth/login"
-    //   });
-    // });
   });
-  // describe('Variant', () => {
-  //   it('Should return status 201 after login success', async () => {
-  //     const payload = {
-  //       "username": "admin",
-  //       "email": "admin@gmail.com",
-  //       "name": "admin",
-  //       "password": "a@123456!!!"
-  //     };
-  //     const data = await request(app.getHttpServer())
-  //       .post('/user')
-  //       .send(payload)
-  //       .expect(201)
+
+  describe('Create Variant', () => {
+    it('Should return status 201 after create a variant successfully (iPhone)', async () => {
+      const payload = {
+        "sku": "IPXE64GS",
+        "name": "iPhone X 64gb",
+        "price": 1000,
+        "currencyCode": 1,
+        "description": "The iPhone X is a smartphone designed, developed, and marketed by Apple Inc. It is the eleventh generation of the iPhone and was announced on September",
+        "productId": 1
+      };
+      const data = await request(app.getHttpServer())
+        .post('/product')
+        .send(payload)
+        .expect(201)
+
+      expect(data.body.name).toEqual('iPhone X 64gb');
+    });
+
+
+    it('Should return status 201 after create a variant successfully (SSS10)', async () => {
+      const payload = {
+        "sku": "SSS10BLK",
+        "name": "Samsung S10 Black",
+        "price": 500,
+        "currencyCode": 1,
+        "description": "Samsung Galaxy S10 is a line of Android-based smartphones manufactured, released and marketed by Samsung Electronics as part of the Samsung Galaxy",
+        "productId": 2
+      };
+      const data = await request(app.getHttpServer())
+        .post('/product')
+        .send(payload)
+        .expect(201)
+
+      expect(data.body.name).toEqual('Samsung S10 Black');
+    });
+  });
+
+  describe('Create Facet', () => {
+    it('Should return status 201 after create a facet successfully (brand:Apple)', async () => {
+      const payload = {
+        "name": "brand",
+        "value": "Apple"
+      };
+      const data = await request(app.getHttpServer())
+        .post('/facet')
+        .send(payload)
+        .expect(201)
+
+      expect(data.body.name).toEqual('brand');
+      expect(data.body.value).toEqual('Apple');
+    });
+
+    it('Should return status 201 after create a facet successfully (brand:Samsung)', async () => {
+      const payload = {
+        "name": "brand",
+        "value": "Samsung"
+      };
+      const data = await request(app.getHttpServer())
+        .post('/facet')
+        .send(payload)
+        .expect(201)
+
+      expect(data.body.name).toEqual('brand');
+      expect(data.body.value).toEqual('Samsung');
+    });
+  });
+
+
+  describe('Add Facet to Product', () => {
+    it('Should return status 201 after create a facet to Product successfully (add Apple to iPhone X)', async () => {
+      await request(app.getHttpServer())
+        .post('/product/1/facet/1')
+        .expect(201)
+    });
+
+    it('Should return status 201 after create a facet to Product successfully (add Apple to iPhone X)', async () => {
+      await request(app.getHttpServer())
+        .post('/product/2/facet/2')
+        .expect(201)
+    });
+  });
+
+
+  // Comment it to enable Postman test
+  // describe('Delete Product should delete variant', () => {
+  //   it('Should return status 200 after delete a product successfully', async () => {
+  //     await request(app.getHttpServer())
+  //       .delete('/product/1')
+  //       .expect(200)
   //
-  //     expect(data.body).toEqual({
-  //       userId: expect.any(Number),
-  //       accessToken: expect.any(String),
-  //     });
-  //   });
-  //
-  //   it('Should return status 201 after login success', async () => {
-  //     const payload = {
-  //       "username": "admin",
-  //       "password": "a@123456!!!"
-  //     };
-  //     const data = await request(app.getHttpServer())
-  //       .post('/auth/login')
-  //       .send(payload)
-  //       .expect(201)
-  //
-  //     expect(data.body).toEqual({
-  //       userId: expect.any(Number),
-  //       accessToken: expect.any(String),
-  //     });
-  //   });
-  //
-  //   it('Should return status 401 after login failed', async () => {
-  //     const payload = {
-  //       "username": "adminx",
-  //       "password": "a@123456!!!xxx"
-  //     };
-  //     const data = await request(app.getHttpServer())
-  //       .post('/auth/login')
-  //       .send(payload)
-  //       .expect(401)
-  //
-  //     expect(data.body).toEqual({
-  //
-  //       status: 401,
-  //       error: "Unauthorized",
-  //       timestamp: expect.any(String),
-  //       path: "/auth/login"
-  //     });
   //   });
   // });
 

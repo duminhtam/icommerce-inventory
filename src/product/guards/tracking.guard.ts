@@ -19,6 +19,10 @@ export class TrackingGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
 
+    // Only track GET method
+    if(request.method !== 'GET'){
+      return true
+    }
 
     try {
       const user = this.client.send({ service: 'tracking', cmd: 'addEvent' }, {

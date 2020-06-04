@@ -23,4 +23,6 @@ import { Crud, CrudController } from "@nestjsx/crud";
 @Controller('variant')
 export class ProductVariantController implements CrudController<ProductVariant> {
   constructor(public service: ProductVariantService) {}
+
+  //  @todo add missing addFacet function for variant
 }

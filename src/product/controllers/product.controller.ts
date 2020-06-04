@@ -1,4 +1,7 @@
-import { Controller, UseGuards } from '@nestjs/common';
+import {
+  Controller, UseGuards, Body,
+  Post, Request
+} from '@nestjs/common';
 
 import { Product } from '../entities/product.entity';
 import { ProductService } from '../services/product.service';
@@ -33,4 +36,10 @@ import { TrackingGuard } from "../guards/tracking.guard";
 @UseGuards(TrackingGuard)
 export class ProductController implements CrudController<Product> {
   constructor(public service: ProductService) {}
+
+  @Post('/:productId/facet/:facetId')
+  addFacet(@Body() body, @Request() req) {
+    const { productId, facetId } = req.params
+    return this.service.productAddFacet(productId, facetId)
+  }
 }
