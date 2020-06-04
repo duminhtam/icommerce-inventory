@@ -40,19 +40,45 @@ describe('Inventory Service (e2e)', () => {
   });
 
   describe('Product', () => {
-    it('Should return status 201 after create product success', async () => {
+    it('Should return status 201 after create a product success', async () => {
       const payload = {
         "name": "iPhone X",
         "description": "The iPhone X is a smartphone designed, developed, and marketed by Apple Inc. It is the eleventh generation of the iPhone and was announced on September"
       };
       const data = await request(app.getHttpServer())
-        .post('/user')
+        .post('/product')
         .send(payload)
         .expect(201)
 
       expect(data.body).toEqual({
-        userId: expect.any(Number),
-        accessToken: expect.any(String),
+        "id": 1,
+        "name": "iPhone X",
+        "slug": "iphone-x",
+        "description": "The iPhone X is a smartphone designed, developed, and marketed by Apple Inc. It is the eleventh generation of the iPhone and was announced on September",
+        "enabled": true,
+        "variants": [],
+        "facets": [],
+        // userId: expect.any(Number),
+        // accessToken: expect.any(String),
+      });
+    });
+
+    describe('Variant', () => {
+      it('Should return status 201 after create a variant success', async () => {
+        const payload = {
+          "sku": "IPXE64GS",
+          "name": "iPhone X 64gb",
+          "price": 1000,
+          "currencyCode": 1,
+          "description": "The iPhone X is a smartphone designed, developed, and marketed by Apple Inc. It is the eleventh generation of the iPhone and was announced on September",
+          "productId": 1
+        };
+        const data = await request(app.getHttpServer())
+          .post('/product')
+          .send(payload)
+          .expect(201)
+
+        expect(data.body.name).toEqual('iPhone X 64gb');
       });
     });
     //
@@ -145,4 +171,5 @@ describe('Inventory Service (e2e)', () => {
   //     });
   //   });
   // });
+
 });
