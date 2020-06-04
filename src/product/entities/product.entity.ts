@@ -54,7 +54,10 @@ export class Product implements ProductInterface{
   enabled: boolean;
 
   @ApiProperty()
-  @OneToMany(() => ProductVariant, (variant) => variant.product)
+  @OneToMany(() => ProductVariant,
+    (variant) => variant.product,
+    {onDelete:'CASCADE'}
+    )
   @JoinTable()
   variants: ProductVariant[];
 
