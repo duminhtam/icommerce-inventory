@@ -24,5 +24,5 @@ export class ProductService extends TypeOrmCrudService<Product> {
     return {
       message: `FacetId ${facetId} was added to ${productId} successfully`,
     };
-  }ß
+  }
 }
