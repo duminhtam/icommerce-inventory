@@ -50,12 +50,26 @@ What things you need to install & start development
 * Node.js v10 or above
 * Docker & Docker Compose to start Redis & PostgresDB
 
-### Installing
+### Installing & start development
 
-Install all package using yarn
+1. Start docker containers
+
+```
+docker-compose up -d
+```
+2. Install all package using yarn
 
 ```
 yarn install
+```
+3. Running the app
+
+```bash
+# development
+$ yarn start
+
+# watch mode
+$ yarn start:dev
 ```
 
 ## Running the tests
@@ -92,16 +106,6 @@ We using eslint standard
 
 ```
 yarn lint
-```
-
-## Running the app
-
-```bash
-# development
-$ yarn start
-
-# watch mode
-$ yarn start:dev
 ```
 
 ### Config
