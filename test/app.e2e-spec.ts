@@ -86,19 +86,19 @@ describe('Inventory Service (e2e)', () => {
   describe('Create Variant', () => {
     it('Should return status 201 after create a variant successfully (iPhone)', async () => {
       const payload = {
-        "sku": "IPXE64GS",
-        "name": "iPhone X 64gb",
+        "sku": "IPXE64GWHITE",
+        "name": "iPhone X 64gb White",
         "price": 1000,
         "currencyCode": 1,
         "description": "The iPhone X is a smartphone designed, developed, and marketed by Apple Inc. It is the eleventh generation of the iPhone and was announced on September",
         "productId": 1
       };
       const data = await request(app.getHttpServer())
-        .post('/product')
+        .post('/variant')
         .send(payload)
         .expect(201)
 
-      expect(data.body.name).toEqual('iPhone X 64gb');
+      expect(data.body.name).toEqual('iPhone X 64gb White');
     });
 
 
@@ -112,7 +112,7 @@ describe('Inventory Service (e2e)', () => {
         "productId": 2
       };
       const data = await request(app.getHttpServer())
-        .post('/product')
+        .post('/variant')
         .send(payload)
         .expect(201)
 
@@ -148,6 +148,35 @@ describe('Inventory Service (e2e)', () => {
       expect(data.body.name).toEqual('brand');
       expect(data.body.value).toEqual('Samsung');
     });
+
+
+    it('Should return status 201 after create a facet successfully (color:white)', async () => {
+      const payload = {
+        "name": "color",
+        "value": "white"
+      };
+      const data = await request(app.getHttpServer())
+        .post('/facet')
+        .send(payload)
+        .expect(201)
+
+      expect(data.body.name).toEqual('color');
+      expect(data.body.value).toEqual('white');
+    });
+
+    it('Should return status 201 after create a facet successfully (color:black)', async () => {
+      const payload = {
+        "name": "color",
+        "value": "black"
+      };
+      const data = await request(app.getHttpServer())
+        .post('/facet')
+        .send(payload)
+        .expect(201)
+
+      expect(data.body.name).toEqual('color');
+      expect(data.body.value).toEqual('black');
+    });
   });
 
 
@@ -165,7 +194,68 @@ describe('Inventory Service (e2e)', () => {
     });
   });
 
+  describe('Add Facet to Product Variant', () => {
+    it('Should return status 201 after add a facet to Product Variant successfully (add color white to iPhone X 64gb White)', async () => {
+      await request(app.getHttpServer())
+        .post('/variant/1/facet/3')
+        .expect(201)
+    });
 
+    it('Should return status 201 after add a facet to Product Variant successfully (add color black to Samsung S10 Black)', async () => {
+      await request(app.getHttpServer())
+        .post('/variant/2/facet/4')
+        .expect(201)
+    });
+  });
+
+
+  describe('Search Product', () => {
+    it('Should return status 200 after search product have facet band:samsung', async () => {
+      const data = await request(app.getHttpServer())
+        .get('/product')
+        .query({
+          s: `{"$and":[{"facets.name":  {"$contL": "brand" }}, {"facets.value":  {"$contL": "samsung" }} ]}`
+        })
+        .expect(200)
+
+      expect(data.body[0].name).toEqual('Samsung S10');
+    });
+
+    it('Should return status 200 after search product have facet band:apple', async () => {
+      const data = await request(app.getHttpServer())
+        .get('/product')
+        .query({
+          s: `{"$and":[{"facets.name":  {"$contL": "brand" }}, {"facets.value":  {"$contL": "apple" }} ]}`
+        })
+        .expect(200)
+
+      expect(data.body[0].name).toEqual('iPhone X');
+    });
+  });
+
+  describe('Search Product Variant', () => {
+    it('Should return status 200 after search product variant have facet color:black', async () => {
+      const data = await request(app.getHttpServer())
+        .get('/variant')
+        .query({
+          s: `{"$and":[{"facets.name":  {"$contL": "color" }}, {"facets.value":  {"$contL": "black" }} ]}`
+        })
+        .expect(200)
+
+      expect(data.body[0].name).toEqual('Samsung S10 Black');
+    });
+
+    it('Should return status 200 after search product have facet color:white', async () => {
+      const data = await request(app.getHttpServer())
+        .get('/variant')
+        .query({
+          s: `{"$and":[{"facets.name":  {"$contL": "color" }}, {"facets.value":  {"$contL": "white" }} ]}`
+        })
+        .expect(200)
+
+      expect(data.body[0].name).toEqual('iPhone X 64gb White');
+    });
+  });
   // Comment it to enable Postman test
   // describe('Delete Product should delete variant', () => {
   //   it('Should return status 200 after delete a product successfully', async () => {

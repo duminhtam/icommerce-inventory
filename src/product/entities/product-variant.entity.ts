@@ -78,7 +78,13 @@ export class ProductVariant implements ProductVariantInterface {
     stockOnHand: number;
 
     @ManyToMany(() => Facet)
-    @JoinTable()
+    @JoinTable(
+      {
+        name: 'product_variant_facets_facet',
+        joinColumn: { name: 'productVariantId', referencedColumnName: 'id'},
+        inverseJoinColumn: { name: 'facetId', referencedColumnName: 'id'},
+    }
+    )
     facets: Facet[];
 
     @BeforeUpdate()

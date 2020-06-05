@@ -22,7 +22,7 @@ export class ProductService extends TypeOrmCrudService<Product> {
       .add(facetId);
 
     return {
-      message: `FacetId ${facetId} was added to ${productId} successfully`,
+      message: `FacetId ${facetId} was added to productId ${productId} successfully`,
     };
   }
 }
