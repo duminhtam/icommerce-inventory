@@ -50,6 +50,20 @@ We use 3 Postgres Databases, each microservice’s persistent data private to th
 
 ![](https://github.com/duminhtam/icommerce-inventory/blob/master/README/DB/merged.png?raw=true)
 
+##Sequence Diagram
+1. User Register SD
+
+![](https://github.com/duminhtam/icommerce-inventory/blob/master/README/SD/User%20Register.png?raw=true)
+
+2. User Login SD
+
+![](https://github.com/duminhtam/icommerce-inventory/blob/master/README/SD/User%20Login.png?raw=true)
+
+3. Product Search SD
+
+![](https://github.com/duminhtam/icommerce-inventory/blob/master/README/SD/Product%20Search.png?raw=true)
+
+
 
 ### Prerequisites
 
