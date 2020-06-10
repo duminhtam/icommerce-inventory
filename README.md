@@ -45,12 +45,12 @@ Add 3 variables:
 ```
 
 
-##DB Diagram
+###DB Diagram
 We use 3 Postgres Databases, each microservice’s persistent data private to that service and accessible only via its API. A service’s transactions only involve its database.
 
 ![](https://github.com/duminhtam/icommerce-inventory/blob/master/README/DB/merged.png?raw=true)
 
-##Sequence Diagram
+###Sequence Diagram
 1. User Register SD
 
 ![](https://github.com/duminhtam/icommerce-inventory/blob/master/README/SD/User%20Register.png?raw=true)
