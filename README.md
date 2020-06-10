@@ -9,7 +9,10 @@ These instructions will get you a copy of the project up and running on your loc
 ## Solution Diagram
 This solution follow Microservice, Services must be loosely coupled so that they can be developed, deployed and scaled independently and different services have different data storage requirements
 
+### Components Diagram
 ![](https://i.imgur.com/C4LF3v8.png)
+### Microservice Architecture
+![](https://github.com/duminhtam/icommerce-inventory/blob/master/README/Architecture/architecture-overview.png?raw=true)
 
 ## Postman Collection
 https://www.getpostman.com/collections/56b3f4b8a42c3aa2cc4d
