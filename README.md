@@ -8,6 +8,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Solution Diagram
 This solution follow Microservice, Services must be loosely coupled so that they can be developed, deployed and scaled independently and different services have different data storage requirements
+
 ![](https://i.imgur.com/C4LF3v8.png)
 
 ## Postman Collection
@@ -44,6 +45,7 @@ Add 3 variables:
 ```
 
 ##DB Diagram
+
 We use 3 Postgres Databases, each microservice’s persistent data private to that service and accessible only via its API. A service’s transactions only involve its database.
 
 ![](https://github.com/duminhtam/icommerce-inventory/blob/master/README/DB/merged.png?raw=true)
